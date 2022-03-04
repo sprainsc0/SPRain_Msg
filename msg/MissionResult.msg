@@ -1,0 +1,14 @@
+uint64 timestamp
+uint32 instance_count
+int32 seq_reached
+uint16 seq_current
+uint16 seq_total
+uint16 item_changed_index
+uint16 item_do_jump_remaining
+bool valid
+bool warning
+bool finished
+bool failure
+bool stay_in_failsafe
+bool flight_termination
+bool item_do_jump_changed
