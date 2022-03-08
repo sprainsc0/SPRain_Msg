@@ -1,5 +1,4 @@
 uint64 timestamp
-uint64 last_update_usec
 float32[3] delta_angle
 float32[3] delta_velocity
 float32 delta_vel_dt
