@@ -1,3 +1,5 @@
+# Message Structure
+
 # GPS position in WGS84 coordinates.
 # the field 'timestamp' is for the position & velocity (microseconds)
 uint64 timestamp		# time since system start (microseconds)

@@ -1,4 +1,7 @@
-uint64 timestamp
+# Message Structure
+
+uint64 timestamp    # time since system start (microseconds)
+
 uint32 reset_ms
 uint32 reset_request_ms
 uint8 yaw_reset_count

@@ -1,4 +1,6 @@
-uint64 timestamp
+# Message Structure
+
+uint64 timestamp    # time since system start (microseconds)
 
 uint8 calibrate_type
 uint8 ACCL_CALIBRATING    = 0
@@ -9,6 +11,8 @@ uint8 ESC_CALIBRATING     = 4
 uint8 RC_CALIBRATING      = 5
 
 uint8 calibrate_statu
+uint8 NONE_CALIBRATE = 0
+
 uint8 ACCEL_CALIBRATE_STARTED       = 1
 uint8 ACCEL_CALIBRATE_SUCCESS       = 2
 uint8 ACCEL_CALIBRATE_FAILED        = 3

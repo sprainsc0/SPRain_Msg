@@ -1,4 +1,7 @@
-uint64 timestamp
+# Message Structure
+
+uint64 timestamp    # time since system start (microseconds)
+
 uint32 lag_ms
 float32 min_distance
 float32 max_distance

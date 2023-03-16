@@ -1,4 +1,7 @@
-uint64 timestamp
+# Message Structure
+
+uint64 timestamp    # time since system start (microseconds)
+
 float32 aux1
 float32 aux2
 float32 aux3

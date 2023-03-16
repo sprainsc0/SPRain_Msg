@@ -1,3 +1,5 @@
+# Message Structure
+
 uint64 timestamp		# time since system start (microseconds)
 
 uint8 count			    # Number of satellites visible to the receiver

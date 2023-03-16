@@ -1,4 +1,7 @@
-uint64 timestamp 
+# Message Structure
+
+uint64 timestamp     # time since system start (microseconds)
+
 uint8 cmd                           # bit len 8
 uint8 sub_cmd
 

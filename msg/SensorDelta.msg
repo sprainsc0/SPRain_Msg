@@ -1,4 +1,7 @@
-uint64 timestamp
+# Message Structure
+
+uint64 timestamp    # time since system start (microseconds)
+
 float32[3] delta_angle
 float32[3] delta_velocity
 float32 delta_vel_dt

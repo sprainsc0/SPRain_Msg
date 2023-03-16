@@ -1,4 +1,7 @@
-uint64 timestamp
+# Message Structure
+
+uint64 timestamp    # time since system start (microseconds)
+
 uint32 channel_count
 uint16 rc_lost_frame_count
 uint16[16] values

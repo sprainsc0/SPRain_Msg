@@ -1,4 +1,6 @@
-uint64 timestamp
+# Message Structure
+
+uint64 timestamp    # time since system start (microseconds)
 
 uint8 lock
 uint8 NOTIFY_LOCK   = 1

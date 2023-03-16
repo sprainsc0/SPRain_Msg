@@ -1,23 +1,16 @@
-uint64 timestamp
-bool healthy
-float32 peakavg
-float32 peakbw
-float32 snrx
-float32 snry
-float32 snrz
-float32 fitx
-float32 fity
-float32 fitz
+# Message Structure
 
-uint8[8] id
-float32[8] peakx
-float32[8] peaky
-float32[8] peakz
-float32[8] bwx
-float32[8] bwy
-float32[8] bwz
-float32[8] enx
-float32[8] eny
-float32[8] enz
+uint64 timestamp    # time since system start (microseconds)
+
+float32 sensor_sample_rate_hz
+float32 resolution_hz
+
+float32[3] peak_frequencies_x # x axis peak frequencies
+float32[3] peak_frequencies_y # y axis peak frequencies
+float32[3] peak_frequencies_z # z axis peak frequencies
+
+float32[3] peak_snr_x # x axis peak SNR
+float32[3] peak_snr_y # y axis peak SNR
+float32[3] peak_snr_z # z axis peak SNR
 
 

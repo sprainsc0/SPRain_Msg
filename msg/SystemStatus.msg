@@ -1,4 +1,6 @@
-uint64 timestamp
+# Message Structure
+
+uint64 timestamp    # time since system start (microseconds)
 
 float32 cpu_usage
 float32 mem_usage

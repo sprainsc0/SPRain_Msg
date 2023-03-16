@@ -1,4 +1,7 @@
-uint64 timestamp
+# Message Structure
+
+uint64 timestamp      # time since system start (microseconds)
+
 uint64 heartbeat_time # Time of last received heartbeat from remote system
 uint64 telem_time	  # Time of last received telemetry status packet, 0 for none
 uint8 type			  # type of the radio hardware

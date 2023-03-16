@@ -1,13 +1,16 @@
-uint64 timestamp
+# Message Structure
+
+uint64 timestamp    # time since system start (microseconds)
 
 uint32 last_message_time_ms
 
 uint32 lag_ms
 
 # GPS information
-int32 alt
-int32 lat
-int32 lon
+
+float64 lat
+float64 lon
+float32 alt
 
 float32 horizontal_accuracy
 float32 vertical_accuracy
