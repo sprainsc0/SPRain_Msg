@@ -11,7 +11,10 @@ float32[3] accel_raw
 
 float32 temperature
 uint8 instance
-bool calibrated
+uint8 calibrated
+uint8 GYRO_CALIBRATED = 1
+uint8 ACCL_CALIBRATED = 2
+
 bool healthy
 
 
