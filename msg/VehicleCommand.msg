@@ -7,11 +7,18 @@ uint16 CMD_PREFLIGHT_CALIBRATION   = 1
 uint16 CMD_TEMPERATURE_CALIBRATION = 2
 uint16 CMD_MODE_ARM_STATUS         = 3
 uint16 CMD_NAV_FLIGHT_TASK         = 4
+uint16 CMD_FCU_EXCLUSIVE           = 5
+uint16 CMD_ACU_EXCLUSIVE           = 6
 
 uint32 subcmd
-uint16 VEHICLE_CMD_CUSTOM_0 = 0				# test command
-uint16 VEHICLE_CMD_CUSTOM_1 = 1				# test command
-uint16 VEHICLE_CMD_CUSTOM_2 = 2				# test command
+uint16 BOOT_CMD_REBOOT = 0
+uint16 BOOT_CMD_ERASE = 1
+uint16 BOOT_CMD_JUMP_APP = 2
+uint16 BOOT_CMD_RESET_FRAME = 3
+uint16 BOOT_CMD_ENTER_BOOTLOADER = 4
+uint16 BOOT_CMD_USER_ADDRESS = 5
+uint16 BOOT_CMD_GET_VERSION = 6
+
 uint16 VEHICLE_CMD_NAV_WAYPOINT = 16			# Navigate to MISSION. |Hold time in decimal seconds. (ignored by fixed wing, time to stay at MISSION for rotary wing)| Acceptance radius in meters (if the sphere with this radius is hit, the MISSION counts as reached)| 0 to pass through the WP, if > 0 radius in meters to pass by WP. Positive value for clockwise orbit, negative value for counter-clockwise orbit. Allows trajectory control.| Desired yaw angle at MISSION (rotary wing)| Latitude| Longitude| Altitude|
 uint16 VEHICLE_CMD_NAV_LOITER_UNLIM = 17		# Loiter around this MISSION an unlimited amount of time |Empty| Empty| Radius around MISSION, in meters. If positive loiter clockwise, else counter-clockwise| Desired yaw angle.| Latitude| Longitude| Altitude|
 uint16 VEHICLE_CMD_NAV_LOITER_TURNS = 18		# Loiter around this MISSION for X turns |Turns| Empty| Radius around MISSION, in meters. If positive loiter clockwise, else counter-clockwise| Desired yaw angle.| Latitude| Longitude| Altitude|
@@ -21,6 +28,7 @@ uint16 VEHICLE_CMD_NAV_LAND = 21			# Land at location |Empty| Empty| Empty| Desi
 uint16 VEHICLE_CMD_NAV_TAKEOFF = 22			# Takeoff from ground / hand |Minimum pitch (if airspeed sensor present), desired pitch without sensor| Empty| Empty| Yaw angle (if magnetometer present), ignored without magnetometer| Latitude| Longitude| Altitude|
 uint16 VEHICLE_CMD_NAV_PRECLAND = 23			# Attempt a precision landing
 uint16 VEHICLE_CMD_DO_ORBIT = 34			# Start orbiting on the circumference of a circle defined by the parameters. |Radius [m] |Velocity [m/s] |Yaw behaviour |Empty |Latitude/X |Longitude/Y |Altitude/Z |
+uint16 VEHICLE_CMD_DO_FIGUREEIGHT = 35        		# Start flying on the outline of a figure eight defined by the parameters. |Major Radius [m] |Minor Radius [m] |Velocity [m/s] |Orientation |Latitude/X |Longitude/Y |Altitude/Z |
 uint16 VEHICLE_CMD_NAV_ROI = 80				# Sets the region of interest (ROI) for a sensor set or the vehicle itself. This can then be used by the vehicles control system to control the vehicle attitude and the attitude of various sensors such as cameras. |Region of interest mode. (see MAV_ROI enum)| MISSION index/ target ID. (see MAV_ROI enum)| ROI index (allows a vehicle to manage multiple ROI's)| Empty| x the location of the fixed ROI (see MAV_FRAME)| y| z|
 uint16 VEHICLE_CMD_NAV_PATHPLANNING = 81		# Control autonomous path planning on the MAV. |0: Disable local obstacle avoidance / local path planning (without resetting map), 1: Enable local path planning, 2: Enable and reset local path planning| 0: Disable full path planning (without resetting map), 1: Enable, 2: Enable and reset map/occupancy grid, 3: Enable and reset planned route, but not occupancy grid| Empty| Yaw angle at goal, in compass degrees, [0..360]| Latitude/X of goal| Longitude/Y of goal| Altitude/Z of goal|
 uint16 VEHICLE_CMD_NAV_VTOL_TAKEOFF = 84		# Takeoff from ground / hand and transition to fixed wing |Minimum pitch (if airspeed sensor present), desired pitch without sensor| Empty| Empty| Yaw angle (if magnetometer present), ignored without magnetometer| Latitude| Longitude| Altitude|
@@ -41,14 +49,14 @@ uint16 VEHICLE_CMD_DO_CHANGE_SPEED = 178		# Change speed and/or throttle set poi
 uint16 VEHICLE_CMD_DO_SET_HOME = 179			# Changes the home location either to the current location or a specified location. |Use current (1=use current location, 0=use specified location)| Empty| Empty| Empty| Latitude| Longitude| Altitude|
 uint16 VEHICLE_CMD_DO_SET_PARAMETER = 180		# Set a system parameter.  Caution!  Use of this command requires knowledge of the numeric enumeration value of the parameter. |Parameter number| Parameter value| Empty| Empty| Empty| Empty| Empty|
 uint16 VEHICLE_CMD_DO_SET_RELAY = 181			# Set a relay to a condition. |Relay number| Setting (1=on, 0=off, others possible depending on system hardware)| Empty| Empty| Empty| Empty| Empty|
-uint16 VEHICLE_CMD_DO_REPEAT_RELAY = 182		# Cycle a relay on and off for a desired number of cyles with a desired period. |Relay number| Cycle count| Cycle time (seconds, decimal)| Empty| Empty| Empty| Empty|
-uint16 VEHICLE_CMD_DO_SET_SERVO = 183			# Set a servo to a desired PWM value. |Servo number| PWM (microseconds, 1000 to 2000 typical)| Empty| Empty| Empty| Empty| Empty|
+uint16 VEHICLE_CMD_DO_REPEAT_RELAY = 182		# Cycle a relay on and off for a desired number of cycles with a desired period. |Relay number| Cycle count| Cycle time (seconds, decimal)| Empty| Empty| Empty| Empty|
 uint16 VEHICLE_CMD_DO_REPEAT_SERVO = 184		# Cycle a between its nominal setting and a desired PWM for a desired number of cycles with a desired period. |Servo number| PWM (microseconds, 1000 to 2000 typical)| Cycle count| Cycle time (seconds)| Empty| Empty| Empty|
 uint16 VEHICLE_CMD_DO_FLIGHTTERMINATION = 185		# Terminate flight immediately |Flight termination activated if > 0.5| Empty| Empty| Empty| Empty| Empty| Empty|
+uint16 VEHICLE_CMD_DO_CHANGE_ALTITUDE = 186		# Set the vehicle to Loiter mode and change the altitude to specified value |Altitude| Frame of new altitude | Empty| Empty| Empty| Empty| Empty|
 uint16 VEHICLE_CMD_DO_SET_ACTUATOR = 187		# Sets actuators (e.g. servos) to a desired value. |Actuator 1| Actuator 2| Actuator 3| Actuator 4| Actuator 5| Actuator 6| Index|
 uint16 VEHICLE_CMD_DO_LAND_START = 189			# Mission command to perform a landing. This is used as a marker in a mission to tell the autopilot where a sequence of mission items that represents a landing starts. It may also be sent via a COMMAND_LONG to trigger a landing, in which case the nearest (geographically) landing sequence in the mission will be used. The Latitude/Longitude is optional, and may be set to 0/0 if not needed. If specified then it will be used to help find the closest landing sequence. |Empty| Empty| Empty| Empty| Latitude| Longitude| Empty|
-uint16 VEHICLE_CMD_DO_GO_AROUND = 191			# Mission command to safely abort an autonmous landing. |Altitude (meters)| Empty| Empty| Empty| Empty| Empty| Empty|
-uint16 VEHICLE_CMD_DO_REPOSITION = 192
+uint16 VEHICLE_CMD_DO_GO_AROUND = 191			# Mission command to safely abort an autonomous landing. |Altitude (meters)| Empty| Empty| Empty| Empty| Empty| Empty|
+uint16 VEHICLE_CMD_DO_REPOSITION = 192			# Reposition to specific WGS84 GPS position. |Ground speed [m/s] |Bitmask |Loiter radius [m] for planes |Yaw	[deg] |Latitude	|Longitude |Altitude |
 uint16 VEHICLE_CMD_DO_PAUSE_CONTINUE = 193
 uint16 VEHICLE_CMD_DO_SET_ROI_LOCATION = 195		# Sets the region of interest (ROI) to a location. This can then be used by the vehicles control system to control the vehicle attitude and the attitude of various sensors such as cameras. |Empty| Empty| Empty| Empty| Latitude| Longitude| Altitude|
 uint16 VEHICLE_CMD_DO_SET_ROI_WPNEXT_OFFSET = 196 	# Sets the region of interest (ROI) to be toward next waypoint, with optional pitch/roll/yaw offset. This can then be used by the vehicles control system to control the vehicle attitude and the attitude of various sensors such as cameras. |Empty| Empty| Empty| Empty| pitch offset from next waypoint| roll offset from next waypoint| yaw offset from next waypoint|
@@ -63,6 +71,7 @@ uint16 VEHICLE_CMD_DO_FENCE_ENABLE=207			# Mission command to enable the geofenc
 uint16 VEHICLE_CMD_DO_PARACHUTE=208			# Mission command to trigger a parachute |action (0=disable, 1=enable, 2=release, for some systems see PARACHUTE_ACTION enum, not in general message set.)| Empty| Empty| Empty| Empty| Empty| Empty|
 uint16 VEHICLE_CMD_DO_MOTOR_TEST=209			# motor test command |Instance (1, ...)| throttle type| throttle| timeout [s]| Motor count | Test order| Empty|
 uint16 VEHICLE_CMD_DO_INVERTED_FLIGHT=210		# Change to/from inverted flight |inverted (0=normal, 1=inverted)| Empty| Empty| Empty| Empty| Empty| Empty|
+uint16 VEHICLE_CMD_DO_GRIPPER = 211			# Command to operate a gripper
 uint16 VEHICLE_CMD_DO_SET_CAM_TRIGG_INTERVAL=214	# Mission command to set TRIG_INTERVAL for this flight |Camera trigger distance (meters)| Shutter integration time (ms)| Empty| Empty| Empty| Empty| Empty|
 uint16 VEHICLE_CMD_DO_MOUNT_CONTROL_QUAT=220		# Mission command to control a camera or antenna mount, using a quaternion as reference. |q1 - quaternion param #1, w (1 in null-rotation)| q2 - quaternion param #2, x (0 in null-rotation)| q3 - quaternion param #3, y (0 in null-rotation)| q4 - quaternion param #4, z (0 in null-rotation)| Empty| Empty| Empty|
 uint16 VEHICLE_CMD_DO_GUIDED_MASTER=221			# set id of master controller |System ID| Component ID| Empty| Empty| Empty| Empty| Empty|
@@ -75,6 +84,7 @@ uint16 VEHICLE_CMD_PREFLIGHT_UAVCAN = 243		# UAVCAN configuration. If param 1 ==
 uint16 VEHICLE_CMD_PREFLIGHT_STORAGE = 245		# Request storage of different parameter values and logs. This command will be only accepted if in pre-flight mode. |Parameter storage: 0: READ FROM FLASH/EEPROM, 1: WRITE CURRENT TO FLASH/EEPROM| Mission storage: 0: READ FROM FLASH/EEPROM, 1: WRITE CURRENT TO FLASH/EEPROM| Reserved| Reserved| Empty| Empty| Empty|
 uint16 VEHICLE_CMD_PREFLIGHT_REBOOT_SHUTDOWN = 246	# Request the reboot or shutdown of system components. |0: Do nothing for autopilot, 1: Reboot autopilot, 2: Shutdown autopilot.| 0: Do nothing for onboard computer, 1: Reboot onboard computer, 2: Shutdown onboard computer.| Reserved| Reserved| Empty| Empty| Empty|
 uint16 VEHICLE_CMD_OBLIQUE_SURVEY=260			# Mission command to set a Camera Auto Mount Pivoting Oblique Survey for this flight|Camera trigger distance (meters)| Shutter integration time (ms)| Camera minimum trigger interval| Number of positions| Roll| Pitch| Empty|
+uint16 VEHICLE_CMD_DO_SET_STANDARD_MODE=262		# Enable the specified standard MAVLink mode |MAV_STANDARD_MODE|
 uint16 VEHICLE_CMD_GIMBAL_DEVICE_INFORMATION = 283	# Command to ask information about a low level gimbal
 
 uint16 VEHICLE_CMD_MISSION_START = 300			# start running a mission |first_item: the first mission item to run| last_item:  the last mission item to run (after this item is run, the mission ends)|
@@ -85,6 +95,7 @@ uint16 VEHICLE_CMD_RUN_PREARM_CHECKS = 401      	# Instructs a target system to 
 uint16 VEHICLE_CMD_INJECT_FAILURE = 420			# Inject artificial failure for testing purposes
 uint16 VEHICLE_CMD_START_RX_PAIR = 500			# Starts receiver pairing |0:Spektrum| 0:Spektrum DSM2, 1:Spektrum DSMX|
 uint16 VEHICLE_CMD_REQUEST_MESSAGE = 512    		# Request to send a single instance of the specified message
+uint16 VEHICLE_CMD_REQUEST_CAMERA_INFORMATION = 521     # Request camera information (CAMERA_INFORMATION). |0: No action 1: Request camera capabilities| Reserved (all remaining params)| Reserved (default:0)| Reserved (default:0)| Reserved (default:0)| Reserved (default:0)| Reserved (default:0)|
 uint16 VEHICLE_CMD_SET_CAMERA_MODE = 530		# Set camera capture mode (photo, video, etc.)
 uint16 VEHICLE_CMD_SET_CAMERA_ZOOM = 531		# Set camera zoom
 uint16 VEHICLE_CMD_SET_CAMERA_FOCUS = 532
@@ -102,6 +113,10 @@ uint16 VEHICLE_CMD_ARM_AUTHORIZATION_REQUEST = 3001	# Request arm authorization
 uint16 VEHICLE_CMD_PAYLOAD_PREPARE_DEPLOY = 30001	# Prepare a payload deployment in the flight plan
 uint16 VEHICLE_CMD_PAYLOAD_CONTROL_DEPLOY = 30002	# Control a pre-programmed payload deployment
 uint16 VEHICLE_CMD_FIXED_MAG_CAL_YAW = 42006            # Magnetometer calibration based on provided known yaw. This allows for fast calibration using WMM field tables in the vehicle, given only the known yaw of the vehicle. If Latitude and longitude are both zero then use the current vehicle location.
+uint16 VEHICLE_CMD_DO_WINCH = 42600			# Command to operate winch.
+
+uint16 VEHICLE_CMD_EXTERNAL_POSITION_ESTIMATE = 43003 # external reset of estimator global position when deadreckoning
+uint16 VEHICLE_CMD_EXTERNAL_WIND_ESTIMATE = 43004
 
 bool from_external
 float32 param1
@@ -111,3 +126,8 @@ float32 param4
 float32 param5
 float32 param6
 float32 param7
+uint8 target_system		# System which should execute the command
+uint8 target_component	# Component which should execute the command, 0 for all components
+uint8 source_system		# System sending the command
+uint16 source_component	# Component / mode executor sending the command
+uint8 confirmation		# 0: First transmission of this command. 1-255: Confirmation transmissions (e.g. for kill command)

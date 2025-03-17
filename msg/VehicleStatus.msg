@@ -26,11 +26,20 @@ uint8 VEHICLE_TYPE_FIXED_WING = 2
 uint8 VEHICLE_TYPE_ROVER = 3
 uint8 VEHICLE_TYPE_AIRSHIP = 4
 
+uint8 arming_state
+uint8 ARMING_STATE_DISARMED = 1
+uint8 ARMING_STATE_ARMED    = 2
+
 # VTOL flags
 bool is_vtol             # True if the system is VTOL capable
 bool is_vtol_tailsitter  # True if the system performs a 90° pitch down rotation during transition from MC to FW
 bool in_transition_mode  # True if VTOL is doing a transition
 bool in_transition_to_fw # True if VTOL is doing a transition from MC to FW
+
+# MAVLink identification
+uint8 system_type  # system type, contains mavlink MAV_TYPE
+uint8 system_id	   # system id, contains MAVLink's system ID field
+uint8 component_id # subsystem / component id, contains MAVLink's component ID field
 
 bool mission_failure # Set to true if mission could not continue/finish
 bool geofence_violated
@@ -39,7 +48,3 @@ bool radio_failsafe				  # true if system is in failsafe state
 bool nav_failsafe
 bool batt_failsafe
 bool engine_failsafe
-
-
-
-
